@@ -1,0 +1,28 @@
+PODS:
+  - Flutter (1.0.0)
+  - integration_test (0.0.1):
+    - Flutter
+  - speedpay_sdk_plugin (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - speedpay_sdk_plugin (from `.symlinks/plugins/speedpay_sdk_plugin/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+  speedpay_sdk_plugin:
+    :path: ".symlinks/plugins/speedpay_sdk_plugin/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
+  speedpay_sdk_plugin: c09b87a475b31f4d9f0ad5c6c08cf0707de4ac66
+
+PODFILE CHECKSUM: 6e700dec67e6deac9b1c69bb14c49a2217a12d15
+
+COCOAPODS: 1.15.2

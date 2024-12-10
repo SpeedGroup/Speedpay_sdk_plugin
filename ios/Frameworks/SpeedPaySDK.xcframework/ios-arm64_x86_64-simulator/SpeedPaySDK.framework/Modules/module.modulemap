@@ -1,0 +1,6 @@
+framework module SpeedPaySDK {
+  umbrella header "SpeedPaySDK.h"
+  export *
+
+  module * { export * }
+}
