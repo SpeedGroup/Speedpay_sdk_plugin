@@ -1,7 +1,7 @@
 # SpeedPay SDK Flutter集成
 
 ## 1. 添加依赖
-在pubspec.yaml文件中添加 `speedpay_sdk_plugin` 依赖
+在pubspec.yaml文件中添加 `speedpay_sdk_plugin` 依赖：
 ``` yaml
 dependencies:
   flutter:
@@ -14,7 +14,7 @@ dependencies:
 ```
 
 ## 2.调用支付方法
-调用业务接口获取到支付参数后，调用SDK方法
+调用业务接口获取到支付参数后，调用SDK方法：
 ```dart
 Map<String, dynamic> parameters = {
   "appid": appId,
@@ -34,6 +34,8 @@ if (resultCode?.toUpperCase() == "SUCCESS") {
   debugPrint("其他结果：$resultCode");
 }
 ```
+可参考[Demo](https://github.com/SpeedGroup/Speedpay_sdk_plugin/blob/main/example/lib/main.dart) 。
+
 
 ## 3. ResultCode定义
 `SUCCESS`代表成功，`USER_CANCEL`代表用户取消，其他结果代表失败，具体失败原因错误码查看接口文档
