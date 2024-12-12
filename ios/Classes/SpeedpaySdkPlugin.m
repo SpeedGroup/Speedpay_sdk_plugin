@@ -3,13 +3,12 @@
 
 @implementation SpeedpaySdkPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-    FlutterMethodChannel* channel = [FlutterMethodChannel
-                                     methodChannelWithName:@"speedpay_sdk_plugin"
-                                     binaryMessenger:[registrar messenger]];
-    SpeedpaySdkPlugin* instance = [[SpeedpaySdkPlugin alloc] init];
-    [registrar addApplicationDelegate:instance];
-    [registrar addMethodCallDelegate:instance channel:channel];
-    
+  FlutterMethodChannel* channel = [FlutterMethodChannel
+      methodChannelWithName:@"speedpay_sdk_plugin"
+            binaryMessenger:[registrar messenger]];
+  SpeedpaySdkPlugin* instance = [[SpeedpaySdkPlugin alloc] init];
+  [registrar addMethodCallDelegate:instance channel:channel];
+  [registrar addMethodCallDelegate:instance channel:channel];
 }
 
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {

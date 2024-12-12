@@ -1,9 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
+
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
-import 'package:collection/collection.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:speedpay_sdk_plugin/speedpay_sdk_plugin.dart';
 
@@ -12,14 +12,13 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  final _speedpaySdkPlugin = SpeedpaySdkPlugin();
   final dio = Dio();
 
   final appId = "SP6562704777";
@@ -36,10 +35,10 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('SpeedPay SDK Plugin example app'),
+          title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: FilledButton(onPressed: _createOrder, child: const Text("使用SpeedPay支付")),
+          child: MaterialButton(onPressed: _createOrder, child: const Text("使用SpeedPay支付")),
         ),
       ),
     );
@@ -88,7 +87,7 @@ class _MyAppState extends State<MyApp> {
           var result = data["result"] as Map;
           if (result.containsKey("prepay_id")) {
             String prepayId = result["prepay_id"] as String;
-           _payOrder(prepayId);
+            _payOrder(prepayId);
           }
         }
       } else {
@@ -109,8 +108,8 @@ class _MyAppState extends State<MyApp> {
         "timestamp": (DateTime.now().millisecondsSinceEpoch).toString() // 时间戳
       };
       parameters["sign"] = _sign(parameters);
-
-      var resultCode = await _speedpaySdkPlugin.payOrder(parameters);
+      debugPrint("[parameters]:$parameters");
+      var resultCode = await SpeedpaySdkPlugin.payOrder(parameters);
       if (resultCode?.toUpperCase() == "SUCCESS") {
         debugPrint("支付成功!");
       } else if (resultCode?.toUpperCase() == "USER_CANCEL") {

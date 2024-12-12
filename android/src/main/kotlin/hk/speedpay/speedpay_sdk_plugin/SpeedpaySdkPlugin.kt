@@ -1,5 +1,7 @@
 package hk.speedpay.speedpay_sdk_plugin
 
+import androidx.annotation.NonNull
+
 import android.app.Activity
 import android.content.Context
 import com.speedpay.pay.SpeedPay
@@ -11,7 +13,6 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-
 
 /** SpeedpaySdkPlugin */
 class SpeedpaySdkPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -25,18 +26,19 @@ class SpeedpaySdkPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
   private var mSpeedPay : SpeedPay? = null
   private var result: Result? = null
 
-  override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+  override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "speedpay_sdk_plugin")
     channel.setMethodCallHandler(this)
     applicationContext = flutterPluginBinding.applicationContext
   }
 
-  override fun onMethodCall(call: MethodCall, result: Result) {
-    if (call.method == "payOrder") {
+  override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+      if (call.method == "payOrder") {
       this.result = null
       var params = call.arguments as HashMap<String, Any>
       if (params != null && activity != null) {
-        println(activity)
+        println("onMethodCall")
+        println(Thread.currentThread())
         this.result = result
         mSpeedPay = SpeedPay(activity!!)
         mSpeedPay?.register { msg ->
@@ -54,24 +56,24 @@ class SpeedpaySdkPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
     }
   }
 
-  override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+  override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
     channel.setMethodCallHandler(null)
     mSpeedPay?.unRegister()
   }
 
-  override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+   override fun onAttachedToActivity(@NonNull binding: ActivityPluginBinding) {
     activity = binding.activity;
   }
 
   override fun onDetachedFromActivityForConfigChanges() {
-    TODO("Not yet implemented")
+
   }
 
-  override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-    TODO("Not yet implemented")
+  override fun onReattachedToActivityForConfigChanges(@NonNull binding: ActivityPluginBinding) {
+
   }
 
   override fun onDetachedFromActivity() {
-    TODO("Not yet implemented")
+    activity = null
   }
 }

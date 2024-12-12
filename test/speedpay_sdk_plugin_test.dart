@@ -1,35 +1,23 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:speedpay_sdk_plugin/speedpay_sdk_plugin.dart';
-import 'package:speedpay_sdk_plugin/speedpay_sdk_plugin_platform_interface.dart';
-import 'package:speedpay_sdk_plugin/speedpay_sdk_plugin_method_channel.dart';
-import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-
-class MockSpeedpaySdkPluginPlatform
-    with MockPlatformInterfaceMixin
-    implements SpeedpaySdkPluginPlatform {
-
-  @override
-  Future<String?> getPlatformVersion() => Future.value('42');
-
-  @override
-  Future<String?> payOrder(Map<String, dynamic> params) {
-    // TODO: implement payOrder
-    throw UnimplementedError();
-  }
-}
 
 void main() {
-  final SpeedpaySdkPluginPlatform initialPlatform = SpeedpaySdkPluginPlatform.instance;
+  const MethodChannel channel = MethodChannel('speedpay_sdk_plugin');
 
-  test('$MethodChannelSpeedpaySdkPlugin is the default instance', () {
-    expect(initialPlatform, isInstanceOf<MethodChannelSpeedpaySdkPlugin>());
+  TestWidgetsFlutterBinding.ensureInitialized();
+
+  setUp(() {
+    channel.setMockMethodCallHandler((MethodCall methodCall) async {
+      return '42';
+    });
+  });
+
+  tearDown(() {
+    channel.setMockMethodCallHandler(null);
   });
 
   test('getPlatformVersion', () async {
-    SpeedpaySdkPlugin speedpaySdkPlugin = SpeedpaySdkPlugin();
-    MockSpeedpaySdkPluginPlatform fakePlatform = MockSpeedpaySdkPluginPlatform();
-    SpeedpaySdkPluginPlatform.instance = fakePlatform;
-
-    expect(await speedpaySdkPlugin.getPlatformVersion(), '42');
+    expect(await SpeedpaySdkPlugin.platformVersion, '42');
   });
 }
